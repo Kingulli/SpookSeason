@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Halloween Room</title>
+    <meta name="description" content="Sculpting Realities day 1 Demo">
+    <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
+    <script>
+
+      AFRAME.registerComponent('model-opacity', {
+  schema: {default: 1.0},
+  init: function () {
+    this.el.addEventListener('model-loaded', this.update.bind(this));
+  },
+  update: function () {
+    var mesh = this.el.getObject3D('mesh');
+    var data = this.data;
+    if (!mesh) { return; }
+    mesh.traverse(function (node) {
+      if (node.isMesh) {
+        node.material.opacity = data;
+        node.material.transparent = data < 1.0;
+        node.material.needsUpdate = true;
+      }
+    });
+  }
+});
+      
+    </script>
+  </head>
+  <body>
+    <a-scene inspector="url: https://aframe-inspector-20181128-abjyfktcpl.now.sh/aframe-inspector.min.js">>
+      
+    <a-assets>
+      <img id="rug" src="https://cdn.glitch.com/6c7287eb-a52c-4fe8-931f-456df1eab0a4%2Fpersian%20rug.png?v=1571371835105">
+      <img id="wood6" src="https://cdn.glitch.com/6c7287eb-a52c-4fe8-931f-456df1eab0a4%2Fwoood6.jpg?v=1571344313149">
+      <img id="wood5" src="https://cdn.glitch.com/6c7287eb-a52c-4fe8-931f-456df1eab0a4%2Fwood5.jpg?v=1571344541823">
+      <img id="tapestry" src="https://cdn.glitch.com/6c7287eb-a52c-4fe8-931f-456df1eab0a4%2Ftapestry.jpg?v=1571345210556">
+      <a-asset-item id="cone" src="https://cdn.glitch.com/6c7287eb-a52c-4fe8-931f-456df1eab0a4%2Fcone.obj?v=1571344986906"></a-asset-item>
+     <a-asset-item id="table-mtl" src="Assets/Table_Chair.mtl"></a-asset-item>
+      <a-asset-item id="mewithout" src="Assets/mewithout.gltf"></a-asset-item>
+      <a-asset-item id="me" src="Assets/kayyyyy.gltf"></a-asset-item>
+      <a-asset-item id="Tabel" src="Assets/wooden-coffe-table.glb"></a-asset-item>
+      <a-asset-item id="table-obj" src="Assets/Table_Chair.obj"></a-asset-item>
+      <a-assets-item id="leftHand" src="https://cdn.aframe.io/controllers/oculus-hands/v2/leftHand.json"></a-assets-item>
+       <a-assets-item id="rightHand" src="https://cdn.aframe.io/controllers/oculus-hands/v2/rightHand.json"></a-assets-item>
+    </a-assets>
+      
+      <a-circle id="persian rug" position=" 0 .5 0" rotation="90 0 0" radius="7" side="double" material="src:#rug">
+        <a-obj-model gltf-model="#mewithout" position="0 -3 -.05" scale="6 6 6" rotation="90 0 0" opacity=".6"></a-obj-model>
+      </a-circle>
+      <a-circle id="floor" radius="15" material="src:#wood5" position="0 0 0" rotation="-90 0 0"></a-circle>
+      <a-obj-model id="walls" src="#cone" side="double" scale="3 2 3" material="src:#tapestry"></a-obj-model>
+      <a-obj-model id="sidetable" gltf-model="#Tabel" position="0 .65 7" scale="1.5 4 1.5"></a-obj-model>
+      <a-entity id="minime" position="0 6.25 6.5">
+             <a-animation begin="click" attribute="rotation" to="0 360 0"
+                   easing="linear" dur="2000" fill="backwards"></a-animation>
+       <a-obj-model gltf-model="#me" position="0 0 0" scale="1 1 1" rotation="90 180 0" material="#rug"></a-obj-model>
+      <a-obj-model  visible="false" gltf-model="Assets/kayyyyy.gltf" position="0.06234 -1.1643 -10.26102" scale="1.88 1.8 1.8" rotation="90 0 -0.01" material=""></a-obj-model>
+    </a-entity>
+
+    <a-entity id="ghosts">
+      <a-obj-model id="g1" gltf-model="#me" position="3 12 -2" scale="2 2 2" rotation="20 180 30" material="#rug"></a-obj-model>
+      <a-obj-model id="g2" gltf-model="#me" position="5 8 2" scale="1 1 1" rotation="70 200 0" material="#rug"></a-obj-model>
+      <a-obj-model id="g3" gltf-model="#me" position="-2 14 1" scale="1 1 1" rotation="90 180 0" material="#rug"></a-obj-model>
+      
+<a-entity material="side: double; color: #EF2D5E; transparent: true; opacity: 0.5" >
+      <a-obj-model id="g4" gltf-model="Assets/kayyyyy.gltf" position="-3 10 -2" scale="4 4 4" rotation="100 280"  model-opacity=".4"></a-obj-model>
+    </a-entity>
+
+
+      <a-obj-model id="g5" gltf-model="Assets/kayyyyy.gltf" position="0.91579 18.70079 -0.2363" scale="" rotation="0 100"></a-obj-model>
+    </a-entity>
+
+
+<!-- 
+ <a-box  id="box" color="blue" position=" 0 1 -4" rotation="0 -60 0"
+             event-set__mouseenter= "material.color: red" 
+             event-set__mouseleave="material.color: blue"></a-box> -->
+
+
+    <!--   <a-obj-model src="#table-obj" mtl="#table-mtl"></a-obj-model> -->
+      <!-- <a-obj-model id="table" src="#tabled" scale=".07 .07 .07" position="0 2 0" material="src:#tableM"></a-obj-model> -->
+     
+<!-- 
+      <a-scene>
+  <a-assets>
+    <a-asset-item id="crate-obj" src="crate.obj"></a-asset-item>
+    <a-asset-item id="crate-mtl" src="crate.mtl"></a-asset-item>
+  </a-assets>
+
+  Using the asset management system.
+  <a-obj-model src="#crate-obj" mtl="#crate-mtl"></a-obj-model>
+ -->
+  <!-- Defining the URL inline. Not recommended but may be more comfortable. -->
+  <!-- <a-obj-model src="crate.obj" mtl="crate.mtl"></a-obj-model>
+</a-scene> -->
+
+
+
+     <!--   <a-assets>
+    <a-asset-item id="tree-obj" src="/path/to/tree.obj"></a-asset-item>
+    <a-asset-item id="tree-mtl" src="/path/to/tree.mtl"></a-asset-item>
+  </a-assets>
+
+  <a-entity obj-model="obj: #tree-obj; mtl: #tree-mtl"></a-entity> -->
+     
+    <a-box  id="box" color="blue" position=" 0 1 -4" rotation="0 -60 0" visible="false"></a-box>
+
+      <a-sphere id="sphere" color="blue" position="1 1 -3"
+            event-set__click="_event: click; visible:false"
+            event-set__enter="_event: mouseenter; _delay:1500; _target: #box; visible: true;">
+      </a-sphere>
+
+     <!--  <a-entity id="cam" rotation="0 0 0" position="0 0 0">
+       <a-camera position="0 9 4" look-controls="" wasd-controls="acceleration: 200" data-aframe-inspector-original-camera=""> <a-cursor material="" raycaster="" cursor="fuse: true"></a-cursor> </a-camera>
+      </a-entity>   --> 
+
+
+          <a-camera id="camera1" position="0 9 4">  
+<!--         <a-obj-model id="held" gltf-model="Assets/kayyyyy.gltf" position="0 -1.5 -2" scale="1.8 1.8 1.8" rotation="90 0 0" ></a-obj-model> -->
+<a-obj-model id="held" gltf-model="Assets/kayyyyy.gltf" position="0.06007 -3.9 -5.79692" scale="1.8 1.8 1.8" rotation="90 0" material="" obj-model=""></a-obj-model>
+            <a-cursor material="" raycaster="" cursor="fuse: true"></a-cursor> <a-camera>
+
+
+
+<!-- 
+              <a-entity position="0 2.2 4">
+    <a-entity camera look-controls wasd-controls>
+      <a-entity position="0 0 -3"
+                geometry="primitive: ring; radiusInner: 0.2; radiusOuter: 0.3;"
+                material="color: cyan; shader: flat"></a-entity></a-entity></a-entity> -->
+
+</a-scene>
+  </body>
+</html>
